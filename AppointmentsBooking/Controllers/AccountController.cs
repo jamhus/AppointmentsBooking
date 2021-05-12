@@ -17,6 +17,10 @@ namespace AppointmentsBooking.Controllers
         public IActionResult Login()
         {
             return View();
+        }      
+        public IActionResult Register()
+        {
+            return View();
         }
     }
 }

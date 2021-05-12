@@ -26,7 +26,7 @@ namespace AppointmentsBooking.Models.ViewModels
         public int ConfirmPassword { get; set; }
 
         [Required]
-        [Display(Name ="Rule Name")]
-        public string RuleName { get; set; }
+        [Display(Name ="Role Name")]
+        public string RoleName { get; set; }
     }
 }
