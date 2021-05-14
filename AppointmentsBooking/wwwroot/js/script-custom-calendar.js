@@ -5,20 +5,22 @@
 const initilazeCalendar = () => {
    try {
        var calendarEl = document.getElementById('calendar');
-       var calendar = new FullCalendar.Calendar(calendarEl, {
-           initialView: 'dayGridMonth',
-           headerToolbar: {
-               left: 'prev,next,today',
-               center: 'title',
-               right: 'dayGridMonth ,timeGridWeek, timeGridDay'
-           },
-           selectable: true,
-           editable: false,
-           select: (e) => {
-               onShowModal(e, null);
-           }
-       });
-       calendar.render();
+       if (calendarEl) {
+           var calendar = new FullCalendar.Calendar(calendarEl, {
+               initialView: 'dayGridMonth',
+               headerToolbar: {
+                   left: 'prev,next,today',
+                   center: 'title',
+                   right: 'dayGridMonth ,timeGridWeek, timeGridDay'
+               },
+               selectable: true,
+               editable: false,
+               select: (e) => {
+                   onShowModal(e, null);
+               }
+           });
+           calendar.render();
+       }
     } catch (e) {
         alert(e);
     }
@@ -30,5 +32,4 @@ const onShowModal = (obj,isEevntDatails) => {
 
 const onCloseModal = () => {
     $("#appointmentInput").modal("hide");
-
 }
