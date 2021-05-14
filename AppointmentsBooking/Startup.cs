@@ -1,5 +1,6 @@
 using AppointmentsBooking.Data;
 using AppointmentsBooking.Models;
+using AppointmentsBooking.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,6 +34,7 @@ namespace AppointmentsBooking
             });
             services.AddControllersWithViews();
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<DataContext>();
+            services.AddTransient<IAppointmentService,AppointmentService>(); 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
