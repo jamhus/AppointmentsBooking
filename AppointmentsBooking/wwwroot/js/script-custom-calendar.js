@@ -24,5 +24,10 @@ const initilazeCalendar = () => {
 }
 
 const onShowModal = (obj,isEevntDatails) => {
-    $("#appointmentInput").modal("show")
+    $("#appointmentInput").modal("show");
+}
+
+const onCloseModal = () => {
+    $("#appointmentInput").modal("hide");
+
 }
