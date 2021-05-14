@@ -1,9 +1,9 @@
-﻿$(document).ready(function () {
+﻿$(document).ready(()=> {
     initilazeCalendar();
 })
 
-function initilazeCalendar() {
-    try {
+const initilazeCalendar = () => {
+   try {
         $("#calendar").fullCalendar({
             timezone: false,
             header: {
@@ -13,10 +13,16 @@ function initilazeCalendar() {
             },
             selectable: true,
             editable: false,
-
+            select: (e) => {
+                onShowModal(e, null);
+            }
 
         })
     } catch (e) {
         alert(e);
     }
+}
+
+const onShowModal = (obj,isEevntDatails) => {
+    $("#appointmentInput").modal("show")
 }
