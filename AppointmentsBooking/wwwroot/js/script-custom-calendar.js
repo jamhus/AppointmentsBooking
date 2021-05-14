@@ -4,20 +4,21 @@
 
 const initilazeCalendar = () => {
    try {
-        $("#calendar").fullCalendar({
-            timezone: false,
-            header: {
-                left: 'prev,next,today',
-                center: 'title',
-                right: 'month ,agendaWeek, agendaDay'
-            },
-            selectable: true,
-            editable: false,
-            select: (e) => {
-                onShowModal(e, null);
-            }
-
-        })
+       var calendarEl = document.getElementById('calendar');
+       var calendar = new FullCalendar.Calendar(calendarEl, {
+           initialView: 'dayGridMonth',
+           headerToolbar: {
+               left: 'prev,next,today',
+               center: 'title',
+               right: 'dayGridMonth ,timeGridWeek, timeGridDay'
+           },
+           selectable: true,
+           editable: false,
+           select: (e) => {
+               onShowModal(e, null);
+           }
+       });
+       calendar.render();
     } catch (e) {
         alert(e);
     }
