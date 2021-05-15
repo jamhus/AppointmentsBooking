@@ -1,4 +1,5 @@
-﻿using AppointmentsBooking.Services;
+﻿using AppointmentsBooking.Models.ViewModels;
+using AppointmentsBooking.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -26,9 +27,31 @@ namespace AppointmentsBooking.Controllers.Api
             role = _accessor.HttpContext.User.FindFirstValue(ClaimTypes.Role);
         }
 
-        public IActionResult Index()
+        [HttpPost]
+        [Route("SaveCalendarData")]
+        public IActionResult SaveCalendarData(AppointmentViewModel data)
         {
-            return View();
+            CommonResponse<int> commonResponse = new CommonResponse<int>();
+            try
+            {
+                commonResponse.status = _service.AddOrUpdateAppointment(data).Result;
+                if(commonResponse.status == 1)
+                {
+                    commonResponse.message = Helpers.Helper.appointmentUpdated;
+                }
+                if (commonResponse.status == 2)
+                {
+                    commonResponse.message = Helpers.Helper.appointmentAdded;
+                }
+
+            }
+            catch (Exception e)
+            {
+
+                commonResponse.message = e.Message;
+                commonResponse.status = Helpers.Helper.failure_code;
+            }
+            return Ok(commonResponse);
         }
     }
 }

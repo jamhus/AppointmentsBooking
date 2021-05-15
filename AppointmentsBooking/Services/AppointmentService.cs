@@ -1,4 +1,5 @@
 ﻿using AppointmentsBooking.Data;
+using AppointmentsBooking.Models;
 using AppointmentsBooking.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,39 @@ namespace AppointmentsBooking.Services
         {
             _context = context;
         }
+
+        public async Task<int> AddOrUpdateAppointment(AppointmentViewModel model)
+        {
+            var startDate = DateTime.Parse(model.StartDate);
+            var endDate = DateTime.Parse(model.StartDate).AddMinutes(Convert.ToDouble(model.Duration));
+
+            if(model!=null && model.Id > 0)
+            {
+                //update
+                var appointment =  _context.Appointments.Find(model.Id);
+                return 1;
+            }
+            else
+            {
+                // create
+                Appointment appointment = new Appointment()
+                {
+                    Title = model.Title,
+                    Description = model.Description,
+                    StartDate = startDate,
+                    EndDate = endDate,
+                    Duration = model.Duration,
+                    DoctorId = model.DoctorId,
+                    PatientId = model.PatientId,
+                    IsDoctorApproved = false,
+                    AdminId = model.AdminId
+                };
+                _context.Add(appointment);
+                await _context.SaveChangesAsync();
+                return 2;
+            }
+        }
+
         public List<DoctorViewModel> GetAllDoctors()
         {
             var doctors = (
