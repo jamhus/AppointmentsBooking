@@ -49,26 +49,47 @@ const onSubmitForm = () => {
         PatientId: $('#patientId').val(),
         DoctorId: $('#doctorId').val(),
     }
+    if (checkValidation(requestData)) {
+        const payload = {
+            "url": `${routeUrl}/api/Appointment/SaveCalendarData`,
+            "method": "POST",
+            "timeout": 0,
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "data": JSON.stringify(requestData),
+        };
 
-    const payload = {
-        "url": `${routeUrl}/api/Appointment/SaveCalendarData`,
-        "method": "POST",
-        "timeout": 0,
-        "headers": {
-            "Content-Type": "application/json"
-        },
-        "data": JSON.stringify(requestData),
-    };
-
-    $.ajax(payload).done(res => {
-        if (res.status === 1 || res.status === 2) {
-            $.notify(res.message, "success");
+        $.ajax(payload).done(res => {
+            if (res.status === 1 || res.status === 2) {
+                $.notify(res.message, "success");
+                onCloseModal();
+            } else {
+                $.notify(res.message, "error");
+            }
+        }).fail(() => {
+            $.notify("Error", "error");
             onCloseModal();
-        } else {
-            $.notify(res.message, "error");
-        }
-    }).fail(() => {
-        $.notify("Error", "error");
-        onCloseModal();
-    })
+        });
+    }
+}
+
+const checkValidation = (data) => {
+    let isValid = true;
+    if (data.Title === "" || data.Title === undefined) {
+        isValid = false;
+        $("#title").addClass('error');
+    }
+    else {
+        $("#title").removeClass('error');
+
+    }
+    if (data.StartDate === "" || data.StartDate === undefined) {
+        isValid = false;
+        $("#appointmentDate").addClass('error');
+    }
+    else {
+        $("#appointmentDate").removeClass('error');
+    }
+    return isValid;
 }
