@@ -18,6 +18,10 @@
                         <textarea type="text" id="description" value="" class="form-control"></textarea>
                     </div>
                     <div class="form-group">
+                        <label for="appointmentDate">Start Date Time</label>
+                        <input id="appointmentDate" class="form-control"/>
+                    </div>
+                    <div class="form-group">
                         <label for="patientId">Select Patient</label>
                         <select id="patientId" asp-items="@(new SelectList(ViewBag.ListOfPatients,"Id","Name"))" class="form-control"></select>
                     </div>
