@@ -53,5 +53,38 @@ namespace AppointmentsBooking.Controllers.Api
             }
             return Ok(commonResponse);
         }
+
+        [HttpGet]
+        [Route("GetCalendarData")]
+        public IActionResult GetCalendarData(string doctorId)
+        {
+            CommonResponse<List<AppointmentViewModel>> commonResponse = new CommonResponse<List<AppointmentViewModel>>();
+            try
+            {
+                if (role == Helpers.Helper.Patient)
+                {
+                    commonResponse.dataenum = _service.PatientEventsById(loginUserId);
+                    commonResponse.status = Helpers.Helper.success_code;
+                }
+                else if (role == Helpers.Helper.Doctor)
+                {
+                    commonResponse.dataenum = _service.DoctorEventsById(loginUserId);
+                    commonResponse.status = Helpers.Helper.success_code;
+                }
+                else
+                {
+                    commonResponse.dataenum = _service.DoctorEventsById(doctorId);
+                    commonResponse.status = Helpers.Helper.success_code;
+                }
+            }
+            catch (Exception e)
+            {
+
+                commonResponse.message = e.Message;
+                commonResponse.status = Helpers.Helper.failure_code;
+            }
+
+            return Ok(commonResponse);
+        }
     }
 }
