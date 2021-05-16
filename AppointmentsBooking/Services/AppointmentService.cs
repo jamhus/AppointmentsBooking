@@ -48,6 +48,19 @@ namespace AppointmentsBooking.Services
             }
         }
 
+        public List<AppointmentViewModel> DoctorEventsById(string doctorId)
+        {
+            return _context.Appointments.Where(x => x.DoctorId == doctorId).ToList().Select(c=> new AppointmentViewModel() { 
+                Id = c.Id,
+                Description = c.Description,
+                StartDate = c.StartDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                EndDate = c.EndDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                Title= c.Title,
+                Duration= c.Duration,
+                IsDoctorApproved = c.IsDoctorApproved
+            }).ToList();
+        }
+
         public List<DoctorViewModel> GetAllDoctors()
         {
             var doctors = (
@@ -78,6 +91,21 @@ namespace AppointmentsBooking.Services
             ).ToList();
 
             return patients;
+        }
+
+        public List<AppointmentViewModel> PatientEventsById(string patientId)
+        {
+
+            return _context.Appointments.Where(x => x.PatientId == patientId).ToList().Select(c => new AppointmentViewModel()
+            {
+                Id = c.Id,
+                Description = c.Description,
+                StartDate = c.StartDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                EndDate = c.EndDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                Title = c.Title,
+                Duration = c.Duration,
+                IsDoctorApproved = c.IsDoctorApproved
+            }).ToList();
         }
     }
 }

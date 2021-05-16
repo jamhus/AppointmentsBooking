@@ -64,7 +64,7 @@ namespace AppointmentsBooking
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Appointments}/{action=Index}/{id?}");
+                    pattern: "{controller=Account}/{action=Login}/{id?}");
             });
         }
     }
