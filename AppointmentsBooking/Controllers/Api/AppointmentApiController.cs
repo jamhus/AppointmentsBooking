@@ -12,7 +12,7 @@ namespace AppointmentsBooking.Controllers.Api
 {
     [Route("api/Appointment")]
     [ApiController]
-    public class AppointmentApiController : Controller
+    public class AppointmentApiController : ControllerBase
     {
         private readonly IAppointmentService _service;
         private readonly IHttpContextAccessor _accessor;
@@ -29,7 +29,7 @@ namespace AppointmentsBooking.Controllers.Api
 
         [HttpPost]
         [Route("SaveCalendarData")]
-        public IActionResult SaveCalendarData(AppointmentViewModel data)
+        public IActionResult SaveCalendarData([FromBody] AppointmentViewModel data)
         {
             CommonResponse<int> commonResponse = new CommonResponse<int>();
             try

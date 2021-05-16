@@ -50,22 +50,25 @@ const onSubmitForm = () => {
         DoctorId: $('#doctorId').val(),
     }
 
-    $.ajax({
-        url: routeUrl + '/api/Appointment/SaveCalendarData',
-        type: 'POST',
-        data: JSON.stringify(requestData),
-        contentType: "application/json",
-        success: (res) => {
-            if (res.status === 1 || res.status ===2) {
-                $.notify(res.message, "success");
-                onCloseModal();
-            } else {
-                $.notify(res.message, "error");
-
-            }
+    const payload = {
+        "url": `${routeUrl}/api/Appointment/SaveCalendarData`,
+        "method": "POST",
+        "timeout": 0,
+        "headers": {
+            "Content-Type": "application/json"
         },
-        error: (err) => {
-            $.notify("Error", "error");
+        "data": JSON.stringify(requestData),
+    };
+
+    $.ajax(payload).done(res => {
+        if (res.status === 1 || res.status === 2) {
+            $.notify(res.message, "success");
+            onCloseModal();
+        } else {
+            $.notify(res.message, "error");
         }
+    }).fail(() => {
+        $.notify("Error", "error");
+        onCloseModal();
     })
 }

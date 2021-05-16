@@ -14,7 +14,7 @@ namespace AppointmentsBooking.Models.ViewModels
         public string EndDate { get; set; }
         public int Duration { get; set; }
         public string PatientId { get; set; }
-        public int DoctorId { get; set; }
+        public string DoctorId { get; set; }
         public bool IsDoctorApproved { get; set; }
         public string AdminId { get; set; }
         public string DoctorName { get; set; }
