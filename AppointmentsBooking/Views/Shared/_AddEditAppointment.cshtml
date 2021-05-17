@@ -6,13 +6,17 @@
                 <div class="modal-header">
                     @if (User.IsInRole(AppointmentsBooking.Helpers.Helper.Admin))
                     {
-                    <h4 class="modal-title">
-                        Add / Edit appointment
-                    </h4>
+                        <h4 class="modal-title">
+                            Add / Edit appointment
+                        </h4>
                     }
-                <h4 class="modal-title">
-                    Appointment Details
-                </h4>
+                    else
+                    {
+                        <h4 class="modal-title">
+                            Appointment Details
+                        </h4>
+                    }
+
                 </div>
                 <div class="modal-body">
                     <div class="form-group">

@@ -1,6 +1,7 @@
 ﻿
 const routeUrl = location.protocol + "//" + location.host;
 let calendar
+
 $(document).ready(() => {
     $("#appointmentDate").kendoDateTimePicker({
         value: new Date(),
@@ -9,6 +10,7 @@ $(document).ready(() => {
     });
     initilazeCalendar();
 })
+
 const initilazeCalendar = () => {
     try {
         const calendarEl = document.getElementById('calendar');
@@ -71,7 +73,6 @@ const initilazeCalendar = () => {
     }
 }
 
-
 const onShowModal = (obj, isEevntDatails) => {
     if (isEevntDatails !== null) {
         $('#title').val(obj.title);
@@ -84,11 +85,15 @@ const onShowModal = (obj, isEevntDatails) => {
         $("#lblDoctorName").val(obj.doctorName);
         $("#lblStatus").val(obj.isDoctorApproved ? "Approved":"Pending");
         $('#id').val(obj.id);
-        $("#btnConfirm , #btnDelete").removeClass("hidden");
-    } else {
-        $("#btnConfirm , #btnDelete").addClass("hidden");
-        $('#appointmentDate').val(obj.startStr + " " + new moment().format("hh:mm A"));
 
+        if (obj.isDoctorApproved) {
+            $("#btnConfirm").addClass("hidden");
+        }
+        else {
+            $("#btnConfirm").removeClass("hidden");
+        }
+    } else {
+        $('#appointmentDate').val(obj.startStr + " " + new moment().format("hh:mm A"));
     }
     $("#appointmentInput").modal("show");
 }
@@ -182,4 +187,48 @@ const getEventById = (id) => {
 
 const onDoctorChange = () => {
     calendar.refetchEvents();
+}
+
+const onDeleteEvent = () => {
+
+    const id = parseInt($("#id").val());
+
+    const payload = {
+        "url": `${routeUrl}/api/Appointment/DeleteById/${id}`,
+        "method": "GET",
+        "headers": {
+            "dataTyoe": "JSON"
+        },
+    }
+
+    $.ajax(payload).done(res => {
+        if (res.status === 1) {
+            $.notify(res.message, "success");
+            calendar.refetchEvents();
+            onCloseModal();
+        } else {
+            $.notify(res.message, "error");
+        }
+    });
+}
+
+const onConfirmEvent = () => {
+    const id = parseInt($("#id").val());
+
+    const payload = {
+        "url": `${routeUrl}/api/Appointment/ConfirmById/${id}`,
+        "method": "GET",
+        "headers": {
+            "dataTyoe": "JSON"
+        },
+    }
+
+    $.ajax(payload).done(res => {
+        if (res.status === 1) {
+            $.notify(res.message, "success");
+            calendar.refetchEvents();
+        } else {
+            $.notify(res.message, "error");
+        }
+    });
 }
