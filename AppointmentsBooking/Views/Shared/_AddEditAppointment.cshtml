@@ -2,11 +2,17 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <form id="appointmentForm" autocomplete="off" novalidate="novalidate">
-                <input type="hidden" id="id"/>
+                <input type="hidden" id="id" />
                 <div class="modal-header">
+                    @if (User.IsInRole(AppointmentsBooking.Helpers.Helper.Admin))
+                    {
                     <h4 class="modal-title">
                         Add / Edit appointment
                     </h4>
+                    }
+                <h4 class="modal-title">
+                    Appointment Details
+                </h4>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
@@ -19,12 +25,40 @@
                     </div>
                     <div class="form-group">
                         <label for="appointmentDate">Start Date Time</label>
-                        <input id="appointmentDate" class="form-control"/>
+                        <input id="appointmentDate" class="form-control" />
                     </div>
-                    <div class="form-group">
-                        <label for="patientId">Select Patient</label>
-                        <select id="patientId" asp-items="@(new SelectList(ViewBag.ListOfPatients,"Id","Name"))" class="form-control"></select>
-                    </div>
+                    @if (User.IsInRole(AppointmentsBooking.Helpers.Helper.Admin))
+                    {
+                        <div class="form-group">
+                            <label for="patientId">Select Patient</label>
+                            <select id="patientId" asp-items="@(new SelectList(ViewBag.ListOfPatients,"Id","Name"))" class="form-control"></select>
+                        </div>
+                    }
+                    else
+                    {
+                        @if (User.IsInRole(AppointmentsBooking.Helpers.Helper.Doctor))
+                        {
+                            <div class="form-group">
+                                <label for="lblPatientName">Patient Name</label>
+                                <input type="text" id="lblPatientName" disabled class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label for="lblStatus">status</label>
+                                <input type="text" id="lblStatus" disabled class="form-control" />
+                            </div>
+                        }
+                        @if (User.IsInRole(AppointmentsBooking.Helpers.Helper.Patient))
+                        {
+                            <div class="form-group">
+                                <label for="lblDoctorName">Doctor Name</label>
+                                <input type="text" id="lblDoctorName" disabled class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label for="lblStatus">status</label>
+                                <input type="text" id="lblStatus" disabled class="form-control" />
+                            </div>
+                        }
+                    }
                     <div class="form-group">
                         <label for="duration">Duration</label>
                         <select id="duration" asp-items="@ViewBag.Duration" class="form-control"></select>
@@ -32,7 +66,16 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" onclick="onCloseModal();">Close</button> &nbsp;
-                    <button class="btn btn-success" id="btnSubmit" type="button" onclick="onSubmitForm();">Submit</button>
+                    @if (User.IsInRole(AppointmentsBooking.Helpers.Helper.Admin))
+                    {
+                        <button class="btn btn-success" id="btnSubmit" type="button" onclick="onSubmitForm();">Submit</button>
+                        <button class="btn btn-danger hidden" id="btnDelete" type="button" onclick="onDeleteEvent();">Delete</button>
+                    }
+                    @if (User.IsInRole(AppointmentsBooking.Helpers.Helper.Doctor))
+                    {
+                        <button class="btn btn-success hidden" id="btnConfirm" type="button" onclick="onConfirmEvent();">Confirm</button>
+                        <button class="btn btn-danger hidden" id="btnDelete" type="button" onclick="onDeleteEvent();">Delete</button>
+                    }
                 </div>
             </form>
         </div>

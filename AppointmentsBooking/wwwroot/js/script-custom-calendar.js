@@ -80,8 +80,13 @@ const onShowModal = (obj, isEevntDatails) => {
         $('#duration').val(obj.duration);
         $('#doctorId').val(obj.doctorId);
         $('#patientId').val(obj.patientId);
+        $("#lblPatientName").val(obj.patientName);
+        $("#lblDoctorName").val(obj.doctorName);
+        $("#lblStatus").val(obj.isDoctorApproved ? "Approved":"Pending");
         $('#id').val(obj.id);
+        $("#btnConfirm , #btnDelete").removeClass("hidden");
     } else {
+        $("#btnConfirm , #btnDelete").addClass("hidden");
         $('#appointmentDate').val(obj.startStr + " " + new moment().format("hh:mm A"));
 
     }
