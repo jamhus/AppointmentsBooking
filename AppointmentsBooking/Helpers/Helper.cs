@@ -13,6 +13,10 @@ namespace AppointmentsBooking.Helpers
         public static string Doctor = "Doctor";
         public static string appointmentAdded = "Appointment added successfully.";
         public static string appointmentUpdated = "Appointment updated successfully.";
+        public static string appointmentApproved = "Appointment approved successfully.";
+
+        public static string appointmentApprovedError = "Error while approving.";
+
         public static string appointmentDeleted = "Appointment deleted successfully.";
         public static string appointmentExists = "Appointment for selected date and time already exists.";
         public static string appointmentNotExists = "Appointment not exists.";

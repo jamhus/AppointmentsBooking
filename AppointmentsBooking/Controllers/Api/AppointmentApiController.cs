@@ -107,5 +107,56 @@ namespace AppointmentsBooking.Controllers.Api
             }
             return Ok(commonResponse);
         }
+
+        [HttpGet]
+        [Route("DeleteById/{id}")]
+        public async Task<IActionResult> DeleteById(int id)
+        {
+            CommonResponse<AppointmentViewModel> commonResponse = new CommonResponse<AppointmentViewModel>();
+
+            try
+            {
+                commonResponse.status = await _service.DeleteAppointment(id);
+                commonResponse.message = commonResponse.status == 1 ? Helpers.Helper.appointmentDeleted : Helpers.Helper.somethingWentWrong;
+
+            }
+            catch (Exception e)
+            {
+
+                commonResponse.message = e.Message;
+                commonResponse.status = Helpers.Helper.failure_code;
+            }
+            return Ok(commonResponse);
+        }
+
+        [HttpGet]
+        [Route("ConfirmById/{id}")]
+        public IActionResult ConfirmById(int id)
+        {
+            CommonResponse<AppointmentViewModel> commonResponse = new CommonResponse<AppointmentViewModel>();
+
+            try
+            {
+                var result = _service.ConfirmAppointment(id).Result;
+                if(result > 0)
+                {
+                    commonResponse.status = Helpers.Helper.success_code;
+                    commonResponse.message = Helpers.Helper.appointmentApproved;
+                }
+               else
+                {
+                    commonResponse.status = Helpers.Helper.failure_code;
+                    commonResponse.message = Helpers.Helper.appointmentApprovedError;
+                }
+
+            }
+            catch (Exception e)
+            {
+
+                commonResponse.message = e.Message;
+                commonResponse.status = Helpers.Helper.failure_code;
+            }
+            return Ok(commonResponse);
+        }
     }
 }

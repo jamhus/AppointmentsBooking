@@ -21,10 +21,10 @@ namespace AppointmentsBooking.Services
             var startDate = DateTime.Parse(model.StartDate);
             var endDate = DateTime.Parse(model.StartDate).AddMinutes(Convert.ToDouble(model.Duration));
 
-            if(model!=null && model.Id > 0)
+            if (model != null && model.Id > 0)
             {
                 //update
-                var appointment =  _context.Appointments.Find(model.Id);
+                var appointment = _context.Appointments.Find(model.Id);
                 return 1;
             }
             else
@@ -48,15 +48,44 @@ namespace AppointmentsBooking.Services
             }
         }
 
+        public async Task<int> ConfirmAppointment(int id)
+        {
+            var appointment = _context.Appointments.FirstOrDefault(x => x.Id == id);
+            if (appointment != null)
+            {
+                appointment.IsDoctorApproved = true;
+                return await _context.SaveChangesAsync();
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
+        public async Task<int> DeleteAppointment(int id)
+        {
+            var appointment = _context.Appointments.FirstOrDefault(x => x.Id == id);
+            if (appointment != null)
+            {
+                _context.Appointments.Remove(appointment);
+                return await _context.SaveChangesAsync();
+            }
+            else
+            {
+                return 0;
+            }
+        }
+
         public List<AppointmentViewModel> DoctorEventsById(string doctorId)
         {
-            return _context.Appointments.Where(x => x.DoctorId == doctorId).ToList().Select(c=> new AppointmentViewModel() { 
+            return _context.Appointments.Where(x => x.DoctorId == doctorId).ToList().Select(c => new AppointmentViewModel()
+            {
                 Id = c.Id,
                 Description = c.Description,
                 StartDate = c.StartDate.ToString("yyyy-MM-dd HH:mm:ss"),
                 EndDate = c.EndDate.ToString("yyyy-MM-dd HH:mm:ss"),
-                Title= c.Title,
-                Duration= c.Duration,
+                Title = c.Title,
+                Duration = c.Duration,
                 IsDoctorApproved = c.IsDoctorApproved
             }).ToList();
         }
@@ -66,7 +95,7 @@ namespace AppointmentsBooking.Services
             var doctors = (
                 from user in _context.Users
                 join userRoles in _context.UserRoles on user.Id equals userRoles.UserId
-                join roles in _context.Roles.Where(r=> r.Name == Helpers.Helper.Doctor) on userRoles.RoleId equals roles.Id
+                join roles in _context.Roles.Where(r => r.Name == Helpers.Helper.Doctor) on userRoles.RoleId equals roles.Id
                 select new DoctorViewModel
                 {
                     Id = user.Id,
@@ -95,7 +124,7 @@ namespace AppointmentsBooking.Services
 
         public AppointmentViewModel GetById(int id)
         {
-            return _context.Appointments.Where(x =>x.Id == id).ToList().Select(c => new AppointmentViewModel()
+            return _context.Appointments.Where(x => x.Id == id).ToList().Select(c => new AppointmentViewModel()
             {
                 Id = c.Id,
                 Description = c.Description,
@@ -106,7 +135,7 @@ namespace AppointmentsBooking.Services
                 IsDoctorApproved = c.IsDoctorApproved,
                 PatientId = c.PatientId,
                 DoctorId = c.DoctorId,
-                PatientName = _context.Users.Where(x=>x.Id == c.PatientId).Select(x=>x.Name).FirstOrDefault(),
+                PatientName = _context.Users.Where(x => x.Id == c.PatientId).Select(x => x.Name).FirstOrDefault(),
                 DoctorName = _context.Users.Where(x => x.Id == c.DoctorId).Select(x => x.Name).FirstOrDefault(),
             }).SingleOrDefault();
         }

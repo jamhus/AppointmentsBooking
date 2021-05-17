@@ -14,5 +14,8 @@ namespace AppointmentsBooking.Services
         public List<AppointmentViewModel> DoctorEventsById(string doctorId);
         public List<AppointmentViewModel> PatientEventsById(string patientId);
         public AppointmentViewModel GetById(int id);
+        public Task<int> DeleteAppointment(int id);
+        public Task<int> ConfirmAppointment(int id);
+
     }
 }
