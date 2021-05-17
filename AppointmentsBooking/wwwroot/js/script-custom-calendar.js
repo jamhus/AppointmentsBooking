@@ -7,9 +7,9 @@ $(document).ready(() => {
     })
     initilazeCalendar();
 })
-const initilazeCalendar=()=> {
+const initilazeCalendar= () => {
     try {
-        var calendarEl = document.getElementById('calendar');
+        const calendarEl = document.getElementById('calendar');
         if (calendarEl != null) {
            const calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
@@ -20,19 +20,19 @@ const initilazeCalendar=()=> {
                 },
                 selectable: true,
                 editable: false,
-                select: function (event) {
+                select: (event) => {
                     onShowModal(event, null);
                 },
                 eventDisplay: 'block',
-                events: function (fetchInfo, successCallback, failureCallback) {
+                events: (fetchInfo, successCallback, failureCallback) => {
                     $.ajax({
                         url: routeUrl + '/api/Appointment/GetCalendarData?doctorId=' + $("#doctorId").val(),
                         type: 'GET',
                         dataType: 'JSON',
-                        success: function (response) {
+                        success: (response) => {
                             var events = [];
                             if (response.status === 1) {
-                                $.each(response.dataenum, function (i, data) {
+                                $.each(response.dataenum, (i, data) => {
                                     events.push({
                                         title: data.title,
                                         description: data.description,
@@ -45,15 +45,13 @@ const initilazeCalendar=()=> {
                                     });
                                 })
                             }
-                            console.log(events,"events")
                             successCallback(events);
                         },
-                        error: function (xhr) {
+                        error: (xhr) => {
                             $.notify("Error", "error");
                         }
                     });
-                },
-               
+                },         
             });
             calendar.render();
         }
@@ -61,7 +59,6 @@ const initilazeCalendar=()=> {
     catch (e) {
         alert(e);
     }
-
 }
 
 
