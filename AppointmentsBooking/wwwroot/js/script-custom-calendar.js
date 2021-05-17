@@ -15,9 +15,11 @@ const initilazeCalendar = () => {
         if (calendarEl != null) {
            calendar = new FullCalendar.Calendar(calendarEl, {
                initialView: 'dayGridMonth',
-               timeFormat: 'hh:mm a',
-               slotLabelFormat: 'hh:mm a',
-
+               eventTimeFormat: { // like '14:30:00'
+                   hour: '2-digit',
+                   minute: '2-digit',
+                   meridiem: false
+               },
                 headerToolbar: {
                     left: 'prev,next,today',
                     center: 'title',
