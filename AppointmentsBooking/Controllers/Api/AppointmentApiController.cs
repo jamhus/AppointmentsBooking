@@ -86,5 +86,26 @@ namespace AppointmentsBooking.Controllers.Api
 
             return Ok(commonResponse);
         }
+
+        [HttpGet]
+        [Route("GetById/{id}")]
+        public IActionResult GetById(int id)
+        {
+            CommonResponse<AppointmentViewModel> commonResponse = new CommonResponse<AppointmentViewModel>();
+
+            try
+            {
+                commonResponse.dataenum = _service.GetById(id);
+                commonResponse.status = Helpers.Helper.success_code;
+
+            }
+            catch (Exception e)
+            {
+
+                commonResponse.message = e.Message;
+                commonResponse.status = Helpers.Helper.failure_code;
+            }
+            return Ok(commonResponse);
+        }
     }
 }
