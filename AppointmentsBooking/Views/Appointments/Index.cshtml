@@ -5,7 +5,7 @@
             @if (User.IsInRole(AppointmentsBooking.Helpers.Helper.Admin)) { 
                 <div class="form-group row col-2" id="divDoctorList">
                     <label>Select Doctor</label>
-                    @Html.DropDownList("doctorId",new SelectList(ViewBag.ListOfDoctors,"Id","Name"), new { @class="form-control select2"})
+                    @Html.DropDownList("doctorId",new SelectList(ViewBag.ListOfDoctors,"Id","Name"), new { @class="form-control select2", @onchange = "onDoctorChange();" })
                 </div>
 
              }
