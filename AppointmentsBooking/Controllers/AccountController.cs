@@ -2,6 +2,7 @@
 using AppointmentsBooking.Helpers;
 using AppointmentsBooking.Models;
 using AppointmentsBooking.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace AppointmentsBooking.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         SignInManager<ApplicationUser> _signInManager;
