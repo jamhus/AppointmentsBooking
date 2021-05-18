@@ -73,12 +73,12 @@
                     @if (User.IsInRole(AppointmentsBooking.Helpers.Helper.Admin))
                     {
                         <button class="btn btn-success" id="btnSubmit" type="button" onclick="onSubmitForm();">Submit</button>
-                        <button class="btn btn-danger hidden" id="btnDelete" type="button" onclick="onDeleteEvent();">Delete</button>
+                        <button class="btn btn-danger" id="btnDelete" type="button" onclick="onDeleteEvent();">Delete</button>
                     }
                     @if (User.IsInRole(AppointmentsBooking.Helpers.Helper.Doctor))
                     {
-                        <button class="btn btn-success hidden" id="btnConfirm" type="button" onclick="onConfirmEvent();">Confirm</button>
-                        <button class="btn btn-danger hidden" id="btnDelete" type="button" onclick="onDeleteEvent();">Delete</button>
+                        <button class="btn btn-success" id="btnConfirm" type="button" onclick="onConfirmEvent();">Confirm</button>
+                        <button class="btn btn-danger" id="btnDelete" type="button" onclick="onDeleteEvent();">Delete</button>
                     }
                 </div>
             </form>

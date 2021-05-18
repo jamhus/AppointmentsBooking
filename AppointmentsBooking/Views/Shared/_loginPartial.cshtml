@@ -7,6 +7,12 @@
             <li class="nav-link">
                 <span class="text-light">Hello , @User.Identity.Name!</span>
             </li>
+            @if (User.IsInRole(AppointmentsBooking.Helpers.Helper.Admin))
+            {
+                <li>
+                    <a class="nav-link text-light" asp-controller="Account" asp-action="Register">Register Admin</a>
+                </li>
+            }
             <li>
                 <button type="submit" class="btn btn-link text-light">Sign out</button>
             </li>

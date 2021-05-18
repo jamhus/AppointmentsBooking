@@ -87,13 +87,21 @@ const onShowModal = (obj, isEevntDatails) => {
         $('#id').val(obj.id);
 
         if (obj.isDoctorApproved) {
-            $("#btnConfirm").addClass("hidden");
+            $("#btnConfirm").addClass("d-none");
+            $("#btnSubmit").addClass("d-none");
+            $("#btnDelete").removeClass("d-none");
+
         }
         else {
-            $("#btnConfirm").removeClass("hidden");
+            $("#btnSubmit").removeClass("d-none");
+            $("#btnDelete").removeClass("d-none");
         }
     } else {
         $('#appointmentDate').val(obj.startStr + " " + new moment().format("hh:mm A"));
+        $("#id").val(0);
+        $("#btnDelete").addClass("d-none");
+        $("#btnSubmit").removeClass("d-none");
+
     }
     $("#appointmentInput").modal("show");
 }
@@ -102,8 +110,6 @@ const onCloseModal = () => {
     $("#appointmentForm")[0].reset();
     $('#title').val("");
     $('#description').val("");
-    $('#duration').val("");
-    $('#patientId').val("");
     $('#id').val("");
     $("#appointmentInput").modal("hide");
 }
