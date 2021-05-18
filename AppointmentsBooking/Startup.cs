@@ -36,10 +36,11 @@ namespace AppointmentsBooking
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<DataContext>();
             services.AddTransient<IAppointmentService,AppointmentService>();
             services.AddHttpContextAccessor();
+            services.AddScoped<IDbInitializer, DbInitalizer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDbInitializer init)
         {
             if (env.IsDevelopment())
             {
@@ -59,7 +60,7 @@ namespace AppointmentsBooking
             app.UseAuthorization();
 
             app.UseAuthentication();
-
+            init.Initalize();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
