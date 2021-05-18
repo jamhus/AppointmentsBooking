@@ -82,6 +82,10 @@ namespace AppointmentsBooking.Controllers
                     if (!User.IsInRole(Helper.Admin)) { 
                         await _signInManager.SignInAsync(user, isPersistent: false);
                     }
+                    else
+                    {
+                        TempData["adminCreated"] = user.Name;
+                    }
                     return RedirectToAction("Index", "Appointments");
                 }
                 foreach(var error in result.Errors)

@@ -1,6 +1,15 @@
 ﻿@model IEnumerable<AppointmentsBooking.Models.ViewModels.DoctorViewModel> 
 
     <div class="row">
+
+        @if (TempData.ContainsKey("adminCreated")) { 
+            <div class="container">
+                <div class="alert alert-success alert-dismissible">
+                    <a href="#"  class="close" data-dismiss="alert" aira-label="close">x</a>
+                    <strong>Account create for admin  @TempData["adminCreated"]</strong>
+                </div>
+            </div>
+        }
         <div class="container">
             @if (User.IsInRole(AppointmentsBooking.Helpers.Helper.Admin)) { 
                 <div class="form-group row col-2" id="divDoctorList">
